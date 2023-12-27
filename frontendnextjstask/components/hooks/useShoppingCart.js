@@ -1,4 +1,3 @@
-// hooks/useShoppingCart.js
 import { useState } from 'react';
 
 const useShoppingCart = () => {

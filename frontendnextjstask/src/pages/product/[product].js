@@ -15,13 +15,13 @@ const ProductDetail = ({ fieldRes }) => {
       </div>
       <div className="border border-2 shadow-lg m-3 p-3 rounded-4 row">
         <div className="col-md-6 col-12 ">
-          <h2>{fieldRes.id}.</h2>
+          <h2>{fieldRes?.id}.</h2>
           <div className="d-flex">
             <p>Price:</p>
             <p className={`mx-2 ${show ? "" : "text-white"}`}>
-              ${fieldRes.price}
+              ${fieldRes?.price}
             </p>
-            <span className="ms-2" onClick={() => setShow(!show)}>
+            <span className="ms-2" style={{cursor: 'pointer'}} onClick={() => setShow(!show)}>
               {show ? (
                 <i class="bi bi-eye-fill" />
               ) : (
@@ -29,19 +29,18 @@ const ProductDetail = ({ fieldRes }) => {
               )}
             </span>
           </div>
-          <p>{fieldRes.description}</p>
+          <p>{fieldRes?.description}</p>
         </div>
         <div className="col-md-6 col-12 ">
           <Image
             src={fieldRes?.image}
             className="card-img-top pic"
             alt="..."
-            width={150} // Set the desired width
+            width={150} 
             height={300}
           />
         </div>
       </div>
-      {/* Add more details as needed */}
     </section>
   );
 };

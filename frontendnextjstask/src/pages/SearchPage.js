@@ -1,19 +1,16 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Select from "react-select";
-import { useRouter } from "next/router";
 import { useSamplesData } from "../../components/hooks/useSampleData";
 import Link from "next/link";
 import { useCart } from "../../components/context/CartContext";
 
-const index = ({ productsRes }) => {
-  const router = useRouter();
-  const [pData, setpData] = useState(1);
+const SearchPage = ({ productsRes }) => {
   const [show, setShow] = useState(false);
   const [category, setCategory] = useState(null);
   const [id, setId] = useState(null);
 
-  const { data: search, status, isLoading } = useSamplesData(id, category);
+  const { data: search, isLoading } = useSamplesData(id, category);
 
   const { addToCart, cart } = useCart();
 
@@ -108,7 +105,7 @@ const index = ({ productsRes }) => {
                   className="fw-bold text-white"
                   onClick={() => setShow(!show)}
                 >
-                  {show ? "Hide" : "Show All"}
+                  {show ? "Clear Filters" : "Show All"}
                 </Button>
               </div>
             </Col>
@@ -129,14 +126,14 @@ const index = ({ productsRes }) => {
               <tbody className="table-group-divider">
                 {show ? (
                   productsRes?.map((item, index) => (
-                    <tr>
+                    <tr key={item?.id}>
                       <th scope="row">{item?.id}</th>
                       <td>{item?.title}</td>
                       <td className="desc">{item?.description}</td>
                       <td>{item?.category}</td>
                       <td className="price">${item?.price}</td>
                       <td>
-                        <Button variant="success" href={`/product/${item?.id}`}>
+                        <Button variant="info" href={`/product/${item?.id}`}>
                           GO
                         </Button>
                       </td>
@@ -152,14 +149,14 @@ const index = ({ productsRes }) => {
                   ))
                 ) : search?.length > 1 ? (
                   search?.map((item, index) => (
-                    <tr>
+                    <tr key={item?.id}>
                       <th scope="row">{item?.id}</th>
                       <td>{item?.title}</td>
                       <td className="desc">{item?.description}</td>
                       <td>{item?.category}</td>
                       <td className="price">${item?.price}</td>
                       <td>
-                        <Button variant="success" href={`/product/${item?.id}`}>
+                        <Button variant="info" href={`/product/${item?.id}`}>
                           GO
                         </Button>
                       </td>
@@ -182,7 +179,7 @@ const index = ({ productsRes }) => {
                     <td className="price">{search?.price}</td>
                     <td>
                       <Button
-                        variant="success"
+                        variant="info"
                         href={`/product/${search?.id}`}
                         disabled={`${!id ? true : false}`}
                       >
@@ -209,7 +206,7 @@ const index = ({ productsRes }) => {
   );
 };
 
-export default index;
+export default SearchPage;
 
 export const getStaticProps = async () => {
   const { NEXT_PUBLIC_API_URL } = process.env;
