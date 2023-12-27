@@ -1,7 +1,15 @@
-import '@/styles/globals.css'
+import "@/styles/globals.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { CartProvider } from "../../components/context/CartContext";
 
-export default function App({ Component, pageProps }) {
+function App({ Component, pageProps }) {
+  const queryClient = new QueryClient();
   return (
-      <Component {...pageProps} />
-  )
+      <CartProvider>
+        <QueryClientProvider client={queryClient}>
+            <Component {...pageProps} />
+        </QueryClientProvider>
+      </CartProvider>
+  );
 }
+export default App;

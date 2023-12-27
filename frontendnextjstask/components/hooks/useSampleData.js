@@ -1,20 +1,31 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const getSample = async (key) => {
-    const { pageNumber } = key.queryKey[1];
+  const { id, category } = key.queryKey[1];
   
-    if (pageNumber) {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}products`
-      );
-      const data = await res.json();
-      return data;
-    }
-  };
+  if (id) {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}products/${id}`
+    );
+    const data = await res.json();
+    return data;
+  }
+  if (category) {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}products/category/${category}`
+    );
+    const data = await res.json();
+    return data;
+  }
+};
 
-export const useSampleData = (data, pData) => {
-    return useQuery(['sample', { pageNumber: pData }], getSample, {
+
+export const useSamplesData = (id, category) => {
+  return useQuery({
+    queryKey: ['sample', { id, category }],
+    queryFn: getSample, 
+    config: {
       keepPreviousData: true,
-      initialData: data,
-    });
-  };
+    },
+  });
+};

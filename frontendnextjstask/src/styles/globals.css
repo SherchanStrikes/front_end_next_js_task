@@ -105,11 +105,25 @@ a {
     color-scheme: dark;
   }
 } */
-
-.hoveringCard:hover > card-img-top  {
-  background-color: red !important;
+.pic {
+  transition: opacity linear .4s;
 }
 
-.product-details {
-  transition: linear 0.4s ; 
+.cc:hover > .pic {
+  opacity: .3 !important;
 }
+
+.hoveredTitle {
+  display: none;
+}
+
+.cc:hover > .hoveredTitle {
+ display: block;  
+}
+
+@media screen and (max-width: 768px) {
+    .desc, .price {
+      display: none;
+    }
+}
+
