@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
-import Select from "react-select";
+import { Container, Row, Col, Button, Form, InputGroup } from "react-bootstrap";
+// import Select from "react-select";
 import { useSamplesData } from "../../components/hooks/useSampleData";
 import Link from "next/link";
 import { useCart } from "../../components/context/CartContext";
@@ -10,47 +10,49 @@ const SearchPage = ({ productsRes }) => {
   const [category, setCategory] = useState(null);
   const [id, setId] = useState(null);
 
-  const { data: search, isLoading } = useSamplesData(id, category);
-
+  const { data: search } = useSamplesData(id, category);
   const { addToCart, cart } = useCart();
-
+  
+  const submitHandler = (e) => {
+    e.preventDefault();
+  }
   return (
     <section className="bg-warninglight py-5">
-      <div className="d-flex justify-content-between">
+      <div className="d-flex justify-content-between sticky-top">
         <Link href="/">
-          <h1 className="px-4">
+          <h1 className="px-md-4 px-2">
             <i className="bi bi-arrow-left-circle"></i>
           </h1>
         </Link>
         <button
-          className="btn btn-primary me-3 p-3 rounded-5"
+          class="btn btn-primary me-3 mt-1 p-3 rounded-5"
           type="button"
           data-bs-toggle="offcanvas"
-          data-bs-target="#staticBackdrop"
-          aria-controls="staticBackdrop"
+          data-bs-target="#offcanvasRight"
+          aria-controls="offcanvasRight"
         >
-          Cart <i className="bi bi-cart2 ps-3 pe-1"></i>{cart?.length}
+          Cart <i className="bi bi-cart2 ps-3 pe-1"></i>
+          {cart?.length}
         </button>
 
         <div
-          className="offcanvas offcanvas-start"
-          data-bs-backdrop="static"
+          class="offcanvas offcanvas-end"
           tabindex="-1"
-          id="staticBackdrop"
-          aria-labelledby="staticBackdropLabel"
+          id="offcanvasRight"
+          aria-labelledby="offcanvasRightLabel"
         >
-          <div className="offcanvas-header">
-            <h2 className="offcanvas-title text-success" id="staticBackdropLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasRightLabel">
               Shopping Cart
-            </h2>
+            </h5>
             <button
               type="button"
-              className="btn-close"
+              class="btn-close"
               data-bs-dismiss="offcanvas"
               aria-label="Close"
             ></button>
           </div>
-          <div className="offcanvas-body">
+          <div class="offcanvas-body">
             <ul>
               {cart.map((item, index) => (
                 <li key={index}>
@@ -74,16 +76,29 @@ const SearchPage = ({ productsRes }) => {
                 className="bg-white w-100 d-flex justify-content-between py-2 px-3"
                 style={{ borderRadius: "15px" }}
               >
-                <Select
-                  className="my-select w-100 "
-                  isLoading={isLoading}
-                  instanceId="custom-select"
-                  placeholder={<>Single Product (Id)</>}
-                  onInputChange={(newValue) => setId(newValue)}
-                  onChange={(newValue) => setId(newValue)}
-                />
+                <Form onSubmit={submitHandler}>
+                  <InputGroup className="my-3">
+                    <Form.Control
+                      onChange={(e) => setId(e.target.value)}
+                      placeholder="Search Product By Id"
+                    />
+                  </InputGroup>
+                </Form>
               </div>
               <div
+                className="bg-white w-100 d-flex justify-content-between py-2 px-3"
+                style={{ borderRadius: "15px" }}
+              >
+                <Form onSubmit={submitHandler}>
+                  <InputGroup className="my-3">
+                    <Form.Control
+                      onChange={(e) => setCategory(e.target.value)}
+                      placeholder="Category"
+                    />
+                  </InputGroup>
+                </Form>
+              </div>
+              {/* <div
                 className="bg-white w-100 d-flex justify-content-between py-2 px-3"
                 style={{ borderRadius: "15px" }}
               >
@@ -95,7 +110,7 @@ const SearchPage = ({ productsRes }) => {
                   onInputChange={(newValue) => setCategory(newValue)}
                   onChange={(newValue) => setCategory(newValue)}
                 />
-              </div>
+              </div> */}
               <div
                 className="d-flex align-items-center w-100 "
                 style={{ borderRadius: "15px" }}
@@ -116,15 +131,19 @@ const SearchPage = ({ productsRes }) => {
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Title</th>
-                  <th scope="col" className="desc">Description</th>
+                  <th scope="col" className="desc">
+                    Description
+                  </th>
                   <th scope="col">Category</th>
-                  <th scope="col" className="price">Price</th>
+                  <th scope="col" className="price">
+                    Price
+                  </th>
                   <th scope="col">View</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody className="table-group-divider">
-                {show ? (
+                {show && (
                   productsRes?.map((item, index) => (
                     <tr key={item?.id}>
                       <th scope="row">{item?.id}</th>
@@ -147,7 +166,8 @@ const SearchPage = ({ productsRes }) => {
                       </td>
                     </tr>
                   ))
-                ) : search?.length > 1 ? (
+                ) }
+                {search && (search?.length > 1 ? (
                   search?.map((item, index) => (
                     <tr key={item?.id}>
                       <th scope="row">{item?.id}</th>
@@ -171,32 +191,32 @@ const SearchPage = ({ productsRes }) => {
                     </tr>
                   ))
                 ) : (
-                  <tr>
+                  search?.title && (
+                    <tr>
                     <th scope="row">{search?.id}</th>
                     <td>{search?.title}</td>
                     <td className="desc">{search?.description}</td>
                     <td>{search?.category}</td>
-                    <td className="price">{search?.price}</td>
+                    <td className="price">${search?.price}</td>
                     <td>
-                      <Button
+                      {search?.title &&<Button
                         variant="info"
                         href={`/product/${search?.id}`}
-                        disabled={`${!id ? true : false}`}
                       >
                         GO
-                      </Button>
+                      </Button> }
                     </td>
                     <td>
-                      <Button
+                    {search?.title && <Button
                         variant="success"
                         onClick={() => addToCart(search)}
-                        disabled={`${!id ? true : false}`}
                       >
                         <i className="bi bi-cart2"></i>
-                      </Button>
+                      </Button>}
                     </td>
                   </tr>
-                )}
+                  )
+                ))}
               </tbody>
             </table>
           </Row>
