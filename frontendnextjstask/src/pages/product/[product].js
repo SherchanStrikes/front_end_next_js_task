@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { Button, Row } from "react-bootstrap";
 import Seo from "../../../components/Seo";
-import {productpage} from '../../seo.json'
+import {productpage} from '../../../seo.json'
 
 const ProductDetail = ({ fieldRes }) => {
   const router = useRouter();
