@@ -9,7 +9,7 @@ const Home = ({ landingRes }) => {
   const [show, setShow] = useState(false);
   const router = useRouter();
   const {homepage} = meta;
-
+  
   return (
     <div>
       <Seo title={homepage?.title} name={homepage?.name} content={homepage?.content}/>

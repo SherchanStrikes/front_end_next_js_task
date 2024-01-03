@@ -11,10 +11,16 @@ const ProductDetail = ({ fieldRes }) => {
   const [show, setShow] = useState(false);
 
   const {productpage} = meta;
-
+  const jsonLd = {
+    '@context': 'https://front-end-next-js-task-beige.vercel.app/product',
+    '@type': 'Product',
+    name: fieldRes.name,
+    image: fieldRes.image,
+    description: fieldRes.description,
+  }
   return (
     <div>
-      <Seo title={productpage?.title} name={productpage?.name} content={productpage?.content}/>
+      <Seo title={productpage?.title} name={productpage?.name} content={productpage?.content} structured={jsonLd}/>
       <section>
         <div className="d-flex justify-content-between p-3">
           <Button onClick={() => router.push("/")} variant="light">
