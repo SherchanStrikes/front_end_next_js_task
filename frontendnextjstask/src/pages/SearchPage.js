@@ -136,30 +136,8 @@ const SearchPage = ({ productsRes }) => {
                   </tr>
                 </thead>
                 <tbody className="table-group-divider">
-                  {show &&
-                    productsRes?.map((item, index) => (
-                      <tr key={item?.id}>
-                        <th scope="row">{item?.id}</th>
-                        <td>{item?.title}</td>
-                        <td className="desc">{item?.description}</td>
-                        <td>{item?.category}</td>
-                        <td className="price">${item?.price}</td>
-                        <td>
-                          <Button variant="info" href={`/product/${item?.id}`}>
-                            GO
-                          </Button>
-                        </td>
-                        <td>
-                          <Button
-                            variant="success"
-                            onClick={() => addToCart(item)}
-                          >
-                            <i className="bi bi-cart2"></i>
-                          </Button>
-                        </td>
-                      </tr>
-                    ))}
-                  {search &&
+                  
+                  {search ?
                     (search?.length > 1
                       ? search?.map((item, index) => (
                           <tr key={item?.id}>
@@ -170,6 +148,7 @@ const SearchPage = ({ productsRes }) => {
                             <td className="price">${item?.price}</td>
                             <td>
                               <Button
+                              className="text-white"
                                 variant="info"
                                 href={`/product/${item?.id}`}
                               >
@@ -196,6 +175,7 @@ const SearchPage = ({ productsRes }) => {
                             <td>
                               {search?.title && (
                                 <Button
+                                className="text-white"
                                   variant="info"
                                   href={`/product/${search?.id}`}
                                 >
@@ -214,7 +194,30 @@ const SearchPage = ({ productsRes }) => {
                               )}
                             </td>
                           </tr>
-                        ))}
+                        ))
+                      : show &&
+                      productsRes?.map((item, index) => (
+                        <tr key={item?.id}>
+                          <th scope="row">{item?.id}</th>
+                          <td>{item?.title}</td>
+                          <td className="desc">{item?.description}</td>
+                          <td>{item?.category}</td>
+                          <td className="price">${item?.price}</td>
+                          <td>
+                            <Button className="text-white" variant="info" href={`/product/${item?.id}`}>
+                              GO
+                            </Button>
+                          </td>
+                          <td>
+                            <Button
+                              variant="success"
+                              onClick={() => addToCart(item)}
+                            >
+                              <i className="bi bi-cart2"></i>
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
                 </tbody>
               </table>
             </Row>

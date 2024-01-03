@@ -4,23 +4,27 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { Button, Row } from "react-bootstrap";
 import Seo from "../../../components/Seo";
-import meta from '../../../seo.json'
+import meta from "../../../seo.json";
 
 const ProductDetail = ({ fieldRes }) => {
   const router = useRouter();
   const [show, setShow] = useState(false);
-
-  const {productpage} = meta;
+  const { productpage } = meta;
   const jsonLd = {
-    '@context': 'https://front-end-next-js-task-beige.vercel.app/product',
-    '@type': 'Product',
-    name: fieldRes.name,
-    image: fieldRes.image,
-    description: fieldRes.description,
-  }
+    "@context": "https://front-end-next-js-task-beige.vercel.app/product",
+    "@type": "Product",
+    title: fieldRes?.title,
+    image: fieldRes?.image,
+    description: fieldRes?.description,
+  };
   return (
     <div>
-      <Seo title={productpage?.title} name={productpage?.name} content={productpage?.content} structured={jsonLd}/>
+      <Seo
+        title={productpage?.title}
+        name={productpage?.name}
+        content={productpage?.content}
+        structured={jsonLd}
+      />
       <section>
         <div className="d-flex justify-content-between p-3">
           <Button onClick={() => router.push("/")} variant="light">
@@ -32,7 +36,9 @@ const ProductDetail = ({ fieldRes }) => {
         </div>
         <Row className="border border-2 shadow-lg m-3 p-3 rounded-4 overflow-hidden d-flex justify-content-between">
           <div className="col-md-6 col-12 ">
-            <h2>{fieldRes?.id}.</h2>
+            <h2>
+              {fieldRes?.id}. {fieldRes?.title}
+            </h2>
             <div className="d-flex">
               <p>Price:</p>
               <p className={`mx-2 ${show ? "" : "text-white"}`}>
@@ -51,6 +57,25 @@ const ProductDetail = ({ fieldRes }) => {
               </span>
             </div>
             <p>{fieldRes?.description}</p>
+            <div>
+              {Array.from(
+                { length: Math.round(parseInt(fieldRes?.rating?.rate, 10)) },
+                (_, index) => (
+                  <i
+                    key={index}
+                    className="bi bi-star-fill text-warning me-1"
+                  />
+                )
+              )}
+              {fieldRes?.rating?.rate === 10
+                ? ""
+                : Array.from(
+                    { length: Math.round(5 - fieldRes?.rating?.rate) },
+                    (_, index) => (
+                      <i key={index} className="bi bi-star text-warning me-1" />
+                    )
+                  )}
+            </div>
           </div>
           <div className="col-md-4 col-12 ">
             <Image
