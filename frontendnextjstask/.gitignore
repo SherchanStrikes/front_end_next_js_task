@@ -5,7 +5,7 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
-.env
+
 
 # testing
 /coverage
@@ -35,3 +35,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/public/robots.txt
+/public/sitemap.xml
+/public/sitemap-0.xml
+server-sitemap.xml

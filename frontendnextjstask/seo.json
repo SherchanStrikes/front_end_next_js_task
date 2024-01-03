@@ -1,0 +1,17 @@
+{
+    "homepage": {
+        "title" : "Home Page",
+        "name" : "description",
+        "content" : "Products with images, names and prices."
+    },
+    "searchpage" : {
+        "title" : "Search Page",
+        "name" : "description",
+        "content" : "A search bar where users can input the name of a product. On form submission, display a list of search results (products) fetched from the API endpoint."
+    },
+    "productpage" : {
+        "title" : "Product Details Page",
+        "name" : "description",
+        "content" : "When a user clicks on a product from the search results or product list, they should be redirected to a page that displays detailed information about the product, including the product image, name, price, and description."
+    }
+}
