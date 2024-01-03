@@ -4,7 +4,7 @@ import { useSamplesData } from "../../components/hooks/useSampleData";
 import Link from "next/link";
 import { useCart } from "../../components/context/CartContext";
 import Seo from "../../components/Seo";
-import {searchpage} from '../../seo.json'
+import meta from '../../seo.json'
 
 const SearchPage = ({ productsRes }) => {
   const [show, setShow] = useState(false);
@@ -17,15 +17,17 @@ const SearchPage = ({ productsRes }) => {
   const submitHandler = (e) => {
     e.preventDefault();
   };
+
+  const {searchpage} = meta;
   return (
     <div>
       <Seo title={searchpage?.title} name={searchpage?.name} content={searchpage?.content}/>
       <section className="bg-warninglight py-5">
         <div className="d-flex justify-content-between sticky-top">
           <Link href="/" className="d-block">
+            <p className="d-none">Homepage</p>
             <h1 className="px-md-4 px-2 ">
               <i className="bi bi-arrow-left-circle"></i>
-              <p className="d-none">Homepage</p>
             </h1>
           </Link>
           <button
@@ -41,7 +43,7 @@ const SearchPage = ({ productsRes }) => {
 
           <div
             className="offcanvas offcanvas-end"
-            tabindex="-1"
+            tabIndex="-1"
             id="offcanvasRight"
             aria-labelledby="offcanvasRightLabel"
           >

@@ -4,11 +4,14 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { Button, Row } from "react-bootstrap";
 import Seo from "../../../components/Seo";
-import {productpage} from '../../../seo.json'
+import meta from '../../../seo.json'
 
 const ProductDetail = ({ fieldRes }) => {
   const router = useRouter();
   const [show, setShow] = useState(false);
+
+  const {productpage} = meta;
+
   return (
     <div>
       <Seo title={productpage?.title} name={productpage?.name} content={productpage?.content}/>
@@ -47,7 +50,7 @@ const ProductDetail = ({ fieldRes }) => {
             <Image
               src={fieldRes?.image}
               className="card-img-top pic"
-              alt="..."
+              alt="product image"
               width={100}
               height={300}
               objectFit="cover"

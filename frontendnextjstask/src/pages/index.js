@@ -4,10 +4,11 @@ import { useRouter } from "next/router";
 import { Button, Container, Row } from "react-bootstrap";
 import Link from "next/link";
 import Seo from "../../components/Seo";
-import {homepage} from '../../seo.json'
+import meta from '../../seo.json'
 const Home = ({ landingRes }) => {
   const [show, setShow] = useState(false);
   const router = useRouter();
+  const {homepage} = meta;
 
   return (
     <div>
